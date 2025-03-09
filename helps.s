@@ -7,6 +7,8 @@
 
 .globl	FX_MORSEABLE
 .globl	FX_STRLEN
+.globl	FX_TEXTABLE
+.globl	FX_STRCMP
 
 # Tells if the current character (%rdi) is a lower
 # case character.
@@ -74,6 +76,7 @@ FX_MORSEABLE:
 	ret
 
 # Calculates the length of a string
+# NOTE: uses rcx
 FX_STRLEN:
 	movq	$0, %rcx
 .E00_loop:
@@ -84,4 +87,37 @@ FX_STRLEN:
 	jmp	.E00_loop
 .E01_return:
 	movq	%rcx, %rax
+	ret
+
+# Tells if the current character (%rdi) is a morse
+# character a.k.a. - . /
+FX_TEXTABLE:
+	cmpl	$'.', %edi
+	je	.F00_return
+	cmpl	$'-', %edi
+	je	.F00_return
+	cmpl	$'/', %edi
+	je	.F00_return
+	movl	$0, %edi
+.F00_return:
+	movl	%edi, %eax
+	ret
+
+# Compares two strings and returns 1 if they're
+# equal, 0 otherwise
+FX_STRCMP:
+.G00_loop:
+	movzbl	(%rdi), %eax
+	cmpb	(%rsi), %al
+	jne	.G00_no
+	cmpb	$0, %al
+	je	.G01_si
+	incq	%rdi
+	incq	%rsi
+	jmp	.G00_loop
+.G00_no:
+	movl	$0, %eax
+	ret
+.G01_si:
+	movl	$1, %eax
 	ret
