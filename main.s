@@ -17,6 +17,15 @@
 	syscall
 .endm
 
+.macro	PRINT_EN at
+	movq	$1, %rax
+	movq	$1, %rdi
+	leaq	ALPHA_EN(%rip), %rsi
+	addq	\at, %rsi
+	movq	$1, %rdx
+	syscall
+.endm
+
 .globl	_start
 _start:
 	cmpq	$3, (%rsp)
@@ -53,31 +62,34 @@ _start:
 	cmpb	$0, %dil
 	je	.B03_tout_fini
 	call	FX_MORSEABLE
-	cmpl	$0, %eax
+	cmpl	$-1, %eax
 	je	.B04_non_morseable
 	cltq
 	leaq	MORSE(%rip), %rsi
 	movq	(%rsi, %rax, 8), %rsi
-
+	movq	%rsi, %rdi
+	call	FX_STRLEN
+	movq	%rax, %rdx
 	movq	$1, %rax
 	movq	$1, %rdi
-	movq	$4, %rdx
 	syscall
-
-
-	FINI	$0
-
-
 	jmp	.B05_continue
 .B04_non_morseable:
+	cmpl	$' ', %edi
+	je	.B06_is_space
 	movq	$1, %rax
 	movq	$1, %rdi
 	movq	%r15, %rsi
 	movq	$1, %rdx
 	syscall
+	jmp	.B05_continue
+.B06_is_space:
+	PRINT_EN $38
 .B05_continue:
+	PRINT_EN $36
 	incq	%r15
 	jmp	.B02_text_mode
 
 .B03_tout_fini:
+	PRINT_EN $37
 	FINI	$0

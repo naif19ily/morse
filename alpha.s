@@ -42,11 +42,10 @@
 	._7: .string "--..."
 	._8: .string "---.."
 	._9: .string "----."
-	.__: .string "/"
 
 	.section    .data.rel.local, "aw"
 	.align      32
-	.size       MORSE, 296
+	.size       MORSE, 288
 	MORSE:
 		.quad   ._a
 		.quad   ._b
@@ -84,8 +83,7 @@
 		.quad   ._7
 		.quad   ._8
 		.quad   ._9
-		.quad	.__
 	.globl	MORSE
 
-	ALPHA_EN: .string "abcdefghijklmnopqrstuvwxyz0123456789 \n"
+	ALPHA_EN: .string "abcdefghijklmnopqrstuvwxyz0123456789 \n/"
 	.globl    ALPHA_EN

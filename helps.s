@@ -6,6 +6,7 @@
 # /__.-'|_|--|_|
 
 .globl	FX_MORSEABLE
+.globl	FX_STRLEN
 
 # Tells if the current character (%rdi) is a lower
 # case character.
@@ -63,11 +64,24 @@ FX_MORSEABLE:
 	movl	%edi, %eax
 	ret
 .D01_as_upp:
-	subl	$32, %edi
+	addl	$32, %edi
 .D01_ok:
 	subl	$'a', %edi
 	movl	%edi, %eax
 	ret
 .D00_return:
-	movl	$0, %eax
+	movl	$-1, %eax
+	ret
+
+# Calculates the length of a string
+FX_STRLEN:
+	movq	$0, %rcx
+.E00_loop:
+	cmpb	$0, (%rdi)
+	je	.E01_return
+	incq	%rdi
+	incq	%rcx
+	jmp	.E00_loop
+.E01_return:
+	movq	%rcx, %rax
 	ret
