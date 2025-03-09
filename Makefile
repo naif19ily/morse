@@ -4,7 +4,7 @@
 #     /         /	part of `morse` project.
 #  __/ (  | (  |	Mar 09 2025
 # /__.-'|_|--|_|
-objs = main.o
+objs = main.o helps.o
 flags =
 cc = gcc
 exe = mrs
