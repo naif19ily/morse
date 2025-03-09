@@ -55,6 +55,19 @@ _start:
 	call	FX_MORSEABLE
 	cmpl	$0, %eax
 	je	.B04_non_morseable
+	cltq
+	leaq	MORSE(%rip), %rsi
+	movq	(%rsi, %rax, 8), %rsi
+
+	movq	$1, %rax
+	movq	$1, %rdi
+	movq	$4, %rdx
+	syscall
+
+
+	FINI	$0
+
+
 	jmp	.B05_continue
 .B04_non_morseable:
 	movq	$1, %rax

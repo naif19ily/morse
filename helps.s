@@ -7,7 +7,6 @@
 
 .globl	FX_MORSEABLE
 
-
 # Tells if the current character (%rdi) is a lower
 # case character.
 FX_IS_LOWER:
@@ -44,17 +43,31 @@ FX_IS_DIGIT:
 .C00_return:
 	ret
 
-# Tells if the current character (%rdi) can be turn
-# into a morse representation.
+# Cheks if the current character (%rdi) can be turned into
+# a morse character, if so, then it will get its position
+# within the `MORSE` array defined in `alpha.s`
 FX_MORSEABLE:
 	call	FX_IS_LOWER
 	cmpl	$1, %eax
-	je	.D00_return
+	je	.D01_ok
 	call	FX_IS_UPPER
 	cmpl	$1, %eax
-	je	.D00_return
+	je	.D01_as_upp
 	call	FX_IS_DIGIT
 	cmpl	$1, %eax
-	je	.D00_return
+	je	.D01_as_dig
+	jmp	.D00_return
+.D01_as_dig:
+	subl	$'0', %edi
+	addl	$27, %edi
+	movl	%edi, %eax
+	ret
+.D01_as_upp:
+	subl	$32, %edi
+.D01_ok:
+	subl	$'a', %edi
+	movl	%edi, %eax
+	ret
 .D00_return:
+	movl	$0, %eax
 	ret
