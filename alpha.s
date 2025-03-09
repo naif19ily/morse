@@ -45,7 +45,7 @@
 
 	.section    .data.rel.local, "aw"
 	.align      32
-	.size       MORSE, 288
+	.size       MORSE, 296
 	MORSE:
 		.quad   ._a
 		.quad   ._b

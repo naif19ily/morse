@@ -4,6 +4,7 @@
 #     /         /	part of `morse` project.
 #  __/ (  | (  |	Mar 09 2025
 # /__.-'|_|--|_|
+
 objs = main.o helps.o alpha.o
 flags =
 cc = gcc

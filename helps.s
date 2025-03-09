@@ -62,7 +62,7 @@ FX_MORSEABLE:
 	jmp	.D00_return
 .D01_as_dig:
 	subl	$'0', %edi
-	addl	$27, %edi
+	addl	$26, %edi
 	movl	%edi, %eax
 	ret
 .D01_as_upp:
