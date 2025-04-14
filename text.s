@@ -11,6 +11,7 @@ text:
         jz      .end_of_msg
         call    .fx0
 .end_of_msg:
+
         EXIT    $0
 
 
