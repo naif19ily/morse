@@ -1,0 +1,3 @@
+
+    1. `PRINT` macro is not working unless you change .long for .quad in data section for number
+    definitions [SOLVED]

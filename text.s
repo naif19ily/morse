@@ -9,27 +9,38 @@ text:
         # into morse code.
         movzbl  (%r8), %edi
         cmpb    $0, %dil
-        jz      .end_of_msg
+        jz      .c_fini
         call    .fx0
         cmpl    $0, %eax
-        je      .no_mrsbl
+        je      .no_alpha
         call    .fx1
         subl    $97, %eax
         # At this point the code to be printed is stored into
         # eax as an offset.
+        jmp     .pnt_mrs
+.no_alpha:
+	cmpb	$32, %dil
+	je	.pnt_spc
+	cmpb	$48, %dil
+	jl	.pnt_unk
+	cmpb	$57, %dil
+	jg	.pnt_unk
+	# If the code gets here it means, this is a number
+	movl	%edi, %eax
+	subl	$48, %eax
+	addl	$26, %eax
+.pnt_mrs:
         cltq
         leaq    MORSE(%rip), %rbx
         movq    (%rbx, %rax, 8), %rsi
-        movq    %rsi, %rdi                                                              # rsi is the code
+        movq    %rsi, %rdi							# rsi is the code
         call    .fx2
         movq    %rax, %rdx
         movq    $1, %rax
         movq    $1, %rdi
         syscall
-        jmp     .continue
-.no_mrsbl:
-	cmpb	$32, %dil
-	je	.pnt_spc
+	jmp	.continue
+.pnt_unk:
 	PRINT	UNKNOWN_CHR_MSG(%rip), UNKNOWN_CHR_LEN(%rip), $1
 	jmp	.continue
 .pnt_spc:
@@ -38,7 +49,7 @@ text:
 	PRINT_SINGLE $36
         incq    %r8
         jmp     .text
-.end_of_msg:
+.c_fini:
 	PRINT_SINGLE $37
         EXIT    $0
 
@@ -53,7 +64,8 @@ text:
 
 
 # Checks if a character can be translated into
-# a morse representation, accpeted (A-Za-z)
+# a morse representation, accpeted (A-Za-z) numbers
+# are handled in another way
 .fx0:
         movl    $0, %eax
         cmpb    $65, %dil
