@@ -4,14 +4,33 @@
 .include "macros.inc"
 
 text:
+.text
         # At this point R8 stores the message to be encoded
         # into morse code.
         movzbl  (%r8), %edi
         cmpb    $0, %dil
         jz      .end_of_msg
         call    .fx0
-.end_of_msg:
+        cmpl    $0, %eax
+        je      .no_mrsbl
 
+        movq    $1, %rax
+        movq    $1, %rdi
+        movq    %r8, %rsi
+        movq    $1, %rdx
+        syscall
+
+        jmp     .continue
+
+
+.no_mrsbl:
+
+.continue:
+        incq    %r8
+        jmp     .text
+        
+
+.end_of_msg:
         EXIT    $0
 
 
