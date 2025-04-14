@@ -20,29 +20,27 @@ text:
         cltq
         leaq    MORSE(%rip), %rbx
         movq    (%rbx, %rax, 8), %rsi
+        movq    %rsi, %rdi                                                              # rsi is the code
+        call    .fx2
+        movq    %rax, %rdx
         movq    $1, %rax
         movq    $1, %rdi
-
-
-
-        movq    $2, %rdx
         syscall
-
-
-
         jmp     .continue
-
-
 .no_mrsbl:
-
+	cmpb	$32, %dil
+	je	.pnt_spc
+	PRINT	UNKNOWN_CHR_MSG(%rip), UNKNOWN_CHR_LEN(%rip), $1
+	jmp	.continue
+.pnt_spc:
+	PRINT_SINGLE $38
 .continue:
+	PRINT_SINGLE $36
         incq    %r8
         jmp     .text
-        
-
 .end_of_msg:
+	PRINT_SINGLE $37
         EXIT    $0
-
 
 #  ________________
 # < util functions >
@@ -81,3 +79,15 @@ text:
         ret
 
 # Calculates the length of a string
+.fx2:
+        movq    $0, %rcx
+.fx2_loop:
+        movzbl  (%rdi), %eax
+        cmpb    $0, %al
+        jz      .fx2_ret
+        incq    %rdi
+        incq    %rcx
+        jmp     .fx2_loop
+.fx2_ret:
+        movq    %rcx, %rax
+        ret

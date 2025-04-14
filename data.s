@@ -1,11 +1,42 @@
 .section .rodata
-	
-	.usage_msg:	.string	"\n  morse-usage: morse [mode] [message]\n\n"
-	.usage_len:	.long	40
+        #  _______________
+        # < usage message >
+        #  ---------------
+        #         \   ^__^
+        #          \  (oo)\_______
+        #             (__)\       )\/\
+        #                 ||----w |
+        #                 ||     ||
+	USAGE_MSG: .string "\n  morse-usage: morse [mode] [message]\n\n"
+	USAGE_LEN: .quad   40
 
-	.globl		.usage_msg
-	.globl		.usage_len
+	.globl USAGE_MSG
+	.globl USAGE_LEN
 
+        #  __________________
+        # < English alphabet >
+        #  ------------------
+        #         \   ^__^
+        #          \  (oo)\_______
+        #             (__)\       )\/\
+        #                 ||----w |
+        #                 ||     ||
+        ALPHA_EN: .string "abcdefghijklmnopqrstuvwxyz0123456789 \n/"
+	.globl ALPHA_EN
+
+        #  _______________
+        # < Error message >
+        #  ---------------
+        #         \   ^__^
+        #          \  (oo)\_______
+        #             (__)\       )\/\
+        #                 ||----w |
+        #                 ||     ||
+        UNKNOWN_CHR_MSG: .string "<?>"
+        UNKNOWN_CHR_LEN: .quad   3
+
+        .globl UNKNOWN_CHR_MSG
+        .globl UNKNOWN_CHR_LEN
 
         #  ________________
         # < morse alphabet >

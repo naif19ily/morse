@@ -16,7 +16,7 @@ _start:
 	cmpb	$'T', %al
 	jz	.call_text
 .print_usage:
-	PRINT	.usage_msg(%rip), .usage_len(%rip), $2
+	PRINT	USAGE_MSG(%rip), USAGE_LEN(%rip), $1
 	EXIT	$-1
 .call_morse:
 	call	morse
