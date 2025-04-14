@@ -13,12 +13,22 @@ text:
         call    .fx0
         cmpl    $0, %eax
         je      .no_mrsbl
-
+        call    .fx1
+        subl    $97, %eax
+        # At this point the code to be printed is stored into
+        # eax as an offset.
+        cltq
+        leaq    MORSE(%rip), %rbx
+        movq    (%rbx, %rax, 8), %rsi
         movq    $1, %rax
         movq    $1, %rdi
-        movq    %r8, %rsi
-        movq    $1, %rdx
+
+
+
+        movq    $2, %rdx
         syscall
+
+
 
         jmp     .continue
 
@@ -45,7 +55,7 @@ text:
 
 
 # Checks if a character can be translated into
-# a morse representation
+# a morse representation, accpeted (A-Za-z)
 .fx0:
         movl    $0, %eax
         cmpb    $65, %dil
@@ -60,3 +70,14 @@ text:
         movl    $0, %eax
 .fx0_ret:
         ret
+
+# Converts upper-case character into its lower-case version
+.fx1:
+        cmpb    $96, %dil
+        jg      .fx1_ret
+        addl    $32, %edi
+.fx1_ret:
+        movl    %edi, %eax
+        ret
+
+# Calculates the length of a string
