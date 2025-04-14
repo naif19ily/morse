@@ -1,0 +1,5 @@
+
+    * Assemblers
+    * Linkers
+    * Regions of a program (stack, heap, text, static)
+    * usage of rip, rsp, rbp registers

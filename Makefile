@@ -1,20 +1,13 @@
-#                __
-#               / _)
-#      _.----._/ /	dc0x13
-#     /         /	part of `morse` project.
-#  __/ (  | (  |	Mar 09 2025
-# /__.-'|_|--|_|
+objs = main.o data.o morse.o text.o
+flag =
+assb = as
+name = morse
 
-objs = main.o helps.o alpha.o
-flags =
-cc = gcc
-exe = mrs
+all: $(name)
 
-all: $(exe)
-
-$(exe): $(objs)
-	ld	-o $(exe) $(objs)
+$(name): $(objs)
+	ld	-o $(name) $(objs)
 %.o: %.s
-	as	-o $@ $< $(flags)
+	as	$< -o $@
 clean:
-	rm	-rf $(objs) $(exe)
+	rm	-f $(objs) $(name)
