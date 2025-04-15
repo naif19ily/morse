@@ -1,3 +1,9 @@
 
-    1. `PRINT` macro is not working unless you change .long for .quad in data section for number
-    definitions [SOLVED]
+    ~~~~~ [SOLVED] ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    1. `PRINT` macro is not working.
+
+    solution:
+    make sure operands match variable sizes, if in the length defintions you use 'long', then
+    use movl to set a register to such length value, if you use movq, make sure you defined the
+    lengths values with 'quad'
+
