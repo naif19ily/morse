@@ -16,7 +16,7 @@ morse:
         # into morse code.
         movzbl  (%r8), %edi
         cmpb    $0, %dil
-        jz      .end_of_msg
+        jz      .c_fini
 	call	.fx0
 	cmpl	$0, %eax
 	je	.no_mrs
@@ -31,13 +31,15 @@ morse:
 .no_mrs:
 	cmpb	$32, %dil
 	je	.out_code
+	cmpb	$47, %dil
+	je	.ptn_space
 	PRINT	UNKNOWN_ERR_MSG(%rip), UNKNOWN_ERR_LEN(%rip), $1
 	jmp	.continue
 .out_code:
 	# Time to see if what we just got is an acutal morse code
 	movq	$0, %rcx
 .out_code_seek:
-	cmpq	$26, %rcx
+	cmpq	$36, %rcx
 	je	.out_code_404
 	leaq	.code(%rip), %r15
 	leaq	MORSE(%rip), %rax
@@ -55,10 +57,15 @@ morse:
 	jmp	.continue
 .out_code_404:
 	PRINT	UNKNOWN_ERR_MSG(%rip), UNKNOWN_ERR_LEN(%rip), $1
+	jmp	.continue
+.ptn_space:
+	PRINT_SINGLE $36
+	incq	%r8
 .continue:
 	incq	%r8
 	jmp	.loop
-.end_of_msg:
+.c_fini:
+	PRINT_SINGLE $37
         EXIT    $0
 
 #  ________________
@@ -71,14 +78,12 @@ morse:
 #                 ||     ||
 
 # Makes sure the current character stored into rdi
-# is an acutal morse code (.-/)
+# is an acutal morse code (. or -)
 .fx0:
 	movl	$1, %eax
 	cmpb	$45, %dil
 	je	.fx0_ret
 	cmpb	$46, %dil
-	je	.fx0_ret
-	cmpb	$47, %dil
 	je	.fx0_ret
 	movl	$0, %eax
 .fx0_ret:

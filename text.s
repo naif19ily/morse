@@ -62,7 +62,6 @@ text:
 #                 ||----w |
 #                 ||     ||
 
-
 # Checks if a character can be translated into
 # a morse representation, accpeted (A-Za-z) numbers
 # are handled in another way
