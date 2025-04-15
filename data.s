@@ -24,19 +24,19 @@
         ALPHA_EN: .string "abcdefghijklmnopqrstuvwxyz0123456789 \n/"
 	.globl ALPHA_EN
 
-        #  _______________
-        # < Error message >
-        #  ---------------
+        #  ________________
+        # < Error messages >
+        #  ----------------
         #         \   ^__^
         #          \  (oo)\_______
         #             (__)\       )\/\
         #                 ||----w |
         #                 ||     ||
-        UNKNOWN_CHR_MSG: .string "<?>"
-        UNKNOWN_CHR_LEN: .quad   3
+        UNKNOWN_ERR_MSG: .string "<T?>"
+        UNKNOWN_ERR_LEN: .quad   4
 
-        .globl UNKNOWN_CHR_MSG
-        .globl UNKNOWN_CHR_LEN
+        .globl UNKNOWN_ERR_MSG
+        .globl UNKNOWN_ERR_LEN
 
         #  ________________
         # < morse alphabet >

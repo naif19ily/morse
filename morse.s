@@ -31,24 +31,33 @@ morse:
 .no_mrs:
 	cmpb	$32, %dil
 	je	.out_code
-	PRINT	UNKNOWN_CHR_MSG(%rip), UNKNOWN_CHR_LEN(%rip), $1
+	PRINT	UNKNOWN_ERR_MSG(%rip), UNKNOWN_ERR_LEN(%rip), $1
 	jmp	.continue
 .out_code:
-	# if code gets here it means a mtrse code
-	# has been caught
-
-	movq	$1, %rax
-	movq	$1, %rdi
-	leaq	.code(%rip), %rsi
-	movq	%r10, %rdx
-	syscall
-	EXIT	$0
-
-
+	# Time to see if what we just got is an acutal morse code
+	movq	$0, %rcx
+.out_code_seek:
+	cmpq	$26, %rcx
+	je	.out_code_404
+	leaq	.code(%rip), %r15
+	leaq	MORSE(%rip), %rax
+	movq	(%rax, %rcx, 8), %r14
+	call	.fx2
+	cmpl	$1, %eax
+	je	.out_code_put
+	incq	%rcx
+	jmp	.out_code_seek
+.out_code_put:
+	PRINT_SINGLE %rcx
+	movq	$0, %r10
+	movq	$0, .code(%rip)
+	leaq	.code(%rip), %r9
+	jmp	.continue
+.out_code_404:
+	PRINT	UNKNOWN_ERR_MSG(%rip), UNKNOWN_ERR_LEN(%rip), $1
 .continue:
 	incq	%r8
 	jmp	.loop
-
 .end_of_msg:
         EXIT    $0
 
@@ -73,4 +82,40 @@ morse:
 	je	.fx0_ret
 	movl	$0, %eax
 .fx0_ret:
+	ret
+
+# Calculates the length of a string (REPEATED I KNOW, RIEN A FOUTRE)
+.fx1:
+        movq    $0, %rbx
+.fx1_loop:
+        movzbl  (%rdi), %eax
+        cmpb    $0, %al
+        jz      .fx1_ret
+        incq    %rdi
+        incq    %rbx
+        jmp     .fx1_loop
+.fx1_ret:
+        movq    %rbx, %rax
+        ret
+
+# Checks if two strings are equal
+.fx2:
+	movq	%r14, %rdi
+	call	.fx1
+	cmpq	%rax, %r10
+	jne	.fx2_neq
+.fx2_iter:
+	movzbl	(%r14), %eax
+	cmpb	$0, %al
+	je	.fx2_eq
+	cmpb	%al, (%r15)
+	jne	.fx2_neq
+	incq	%r15
+	incq	%r14
+	jmp	.fx2_iter
+.fx2_eq:
+	movl	$1, %eax
+	ret
+.fx2_neq:
+	movl	$0, %eax
 	ret

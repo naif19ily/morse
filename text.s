@@ -41,7 +41,7 @@ text:
         syscall
 	jmp	.continue
 .pnt_unk:
-	PRINT	UNKNOWN_CHR_MSG(%rip), UNKNOWN_CHR_LEN(%rip), $1
+	PRINT	UNKNOWN_ERR_MSG(%rip), UNKNOWN_ERR_LEN(%rip), $1
 	jmp	.continue
 .pnt_spc:
 	PRINT_SINGLE $38
