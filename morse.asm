@@ -1,5 +1,5 @@
 .section .bss
-	.code: .zero	6
+	.code: .zero 6
 
 .section .text
 .globl morse
@@ -12,11 +12,11 @@ morse:
 	leaq	.code(%rip), %r9
 	movq	$0, %r10
 .loop:
-        # At this point R8 stores the message to be encoded
-        # into morse code.
-        movzbl  (%r8), %edi
-        cmpb    $0, %dil
-        jz      .c_fini
+	# At this point R8 stores the message to be encoded
+	# into morse code.
+	movzbl	(%r8), %edi
+	cmpb	$0, %dil
+	jz	.c_fini
 	call	.fx0
 	cmpl	$0, %eax
 	je	.no_mrs
@@ -91,17 +91,17 @@ morse:
 
 # Calculates the length of a string (REPEATED I KNOW, RIEN A FOUTRE)
 .fx1:
-        movq    $0, %rbx
+	movq	$0, %rbx
 .fx1_loop:
-        movzbl  (%rdi), %eax
-        cmpb    $0, %al
-        jz      .fx1_ret
-        incq    %rdi
-        incq    %rbx
-        jmp     .fx1_loop
+	movzbl	(%rdi), %eax
+	cmpb	$0, %al
+	jz	.fx1_ret
+	incq	%rdi
+	incq	%rbx
+	jmp	.fx1_loop
 .fx1_ret:
-        movq    %rbx, %rax
-        ret
+	movq	%rbx, %rax
+	ret
 
 # Checks if two strings are equal
 .fx2:
