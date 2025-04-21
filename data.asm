@@ -1,52 +1,52 @@
 .section .rodata
-        #  _______________
-        # < usage message >
-        #  ---------------
-        #         \   ^__^
-        #          \  (oo)\_______
-        #             (__)\       )\/\
-        #                 ||----w |
-        #                 ||     ||
+	#  _______________
+	# < usage message >
+	#  ---------------
+	#         \   ^__^
+	#          \  (oo)\_______
+	#             (__)\       )\/\
+	#                 ||----w |
+	#                 ||     ||
 	USAGE_MSG: .string "\n  morse-usage: morse [mode] [message]\n\n"
 	USAGE_LEN: .quad   40
-
+	
 	.globl USAGE_MSG
 	.globl USAGE_LEN
-
-        #  __________________
-        # < English alphabet >
-        #  ------------------
-        #         \   ^__^
-        #          \  (oo)\_______
-        #             (__)\       )\/\
-        #                 ||----w |
-        #                 ||     ||
-        ALPHA_EN: .string "abcdefghijklmnopqrstuvwxyz0123456789 \n/"
+	
+	#  __________________
+	# < English alphabet >
+	#  ------------------
+	#         \   ^__^
+	#          \  (oo)\_______
+	#             (__)\       )\/\
+	#                 ||----w |
+	#                 ||     ||
+	ALPHA_EN: .string "abcdefghijklmnopqrstuvwxyz0123456789 \n/"
 	.globl ALPHA_EN
-
-        #  ________________
-        # < Error messages >
-        #  ----------------
-        #         \   ^__^
-        #          \  (oo)\_______
-        #             (__)\       )\/\
-        #                 ||----w |
-        #                 ||     ||
-        UNKNOWN_ERR_MSG: .string "<T?>"
-        UNKNOWN_ERR_LEN: .quad   4
-
-        .globl UNKNOWN_ERR_MSG
-        .globl UNKNOWN_ERR_LEN
-
-        #  ________________
-        # < morse alphabet >
-        #  ----------------
-        #         \   ^__^
-        #          \  (oo)\_______
-        #             (__)\       )\/\
-        #                 ||----w |
-        #                 ||     ||
-        ._a: .string ".-"
+	
+	#  ________________
+	# < Error messages >
+	#  ----------------
+	#         \   ^__^
+	#          \  (oo)\_______
+	#             (__)\       )\/\
+	#                 ||----w |
+	#                 ||     ||
+	UNKNOWN_ERR_MSG: .string "<T?>"
+	UNKNOWN_ERR_LEN: .quad   4
+	
+	.globl UNKNOWN_ERR_MSG
+	.globl UNKNOWN_ERR_LEN
+	
+	#  ________________
+	# < morse alphabet >
+	#  ----------------
+	#         \   ^__^
+	#          \  (oo)\_______
+	#             (__)\       )\/\
+	#                 ||----w |
+	#                 ||     ||
+	._a: .string ".-"
 	._b: .string "-..."
 	._c: .string "-.-."
 	._d: .string "-.."
@@ -82,11 +82,11 @@
 	._7: .string "--..."
 	._8: .string "---.."
 	._9: .string "----."
-
+	
 	.section    .data.rel.local, "aw"
 	.align      32
 	.size       MORSE, 296
-	MORSE:
+	  MORSE:
 	  .quad   ._a
 	  .quad   ._b
 	  .quad   ._c
@@ -123,4 +123,4 @@
 	  .quad   ._7
 	  .quad   ._8
 	  .quad   ._9
-	.globl	MORSE
+	  .globl MORSE
