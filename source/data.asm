@@ -7,8 +7,8 @@
 	#             (__)\       )\/\
 	#                 ||----w |
 	#                 ||     ||
-	USAGE_MSG: .string "\n  morse-usage: morse [mode] [message]\n\n"
-	USAGE_LEN: .quad   40
+	USAGE_MSG: .string "\n  morse-usage: morse [mode T | M] [message]\n\n"
+	USAGE_LEN: .quad   46
 	
 	.globl USAGE_MSG
 	.globl USAGE_LEN
