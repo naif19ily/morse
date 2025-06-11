@@ -31,9 +31,8 @@ _start:
 	movq	$2, %rdi
 	syscall
 .go_t:
-	movq	$60, %rax
-	movq	$3, %rdi
-	syscall
+	call	Text
+	jmp	.exit
 .go_E:
 	movq	$60, %rax
 	movq	$4, %rdi
