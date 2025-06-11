@@ -23,6 +23,16 @@ Text:
 	cmpq	$0, %rax
 	je	.invalid
 	call	ToLower
+	movq	%rax, %rdi
+	call	GetOffset
+	movq	%rax, %rbx
+
+	leaq	__morse(%rip), %rax
+	movq	(%rax, %rbx, 8), %rsi
+	movq	$1, %rax
+	movq	$1, %rdi
+	movq	$4, %rdx
+	syscall
 
 
 	jmp	.resume

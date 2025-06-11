@@ -30,14 +30,31 @@ IsMorseable:
 
 .globl ToLower
 ToLower:
+	xorq	%rax, %rax
 	cmpb	$'9', %dil
 	jle	.f1_ret
 	cmpb	$'Z', %dil
 	jle	.f1_con
 	jmp	.f1_ret
 .f1_con:	
-	xorq	%rax, %rax
-	movb	%dil, %al
-	addb	$32, %al
+	addb	$32, %dil
 .f1_ret:
+	movb	%dil, %al
 	ret
+
+.globl GetOffset
+GetOffset:
+	cmpb	$'9', %dil
+	jle	.f2_num
+	subb	$'a', %dil
+	jmp	.f2_ret
+.f2_num:
+	subb	$'0', %dil
+	addb	$26, %dil
+.f2_ret:
+	movq	%rdi, %rax
+	ret
+
+.globl WriteBuff
+WriteBuff: 
+        

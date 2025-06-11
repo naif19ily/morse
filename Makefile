@@ -5,7 +5,7 @@
 # Jun 11 2025
 #
 
-objs = main.o args.o fatal.o t.o common.o
+objs = main.o args.o fatal.o t.o common.o data.o
 name = morse
 
 all: $(name)
