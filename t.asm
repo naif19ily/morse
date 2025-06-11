@@ -15,6 +15,9 @@ Text:
 	movq	__message(%rip), %r8
 	xorq	%rax, %rax
 	xorq	%rdi, %rdi
+	# r9 will contain the number of bytes written
+	# into __buffer so far
+	xorq	%r9, %r9
 .iter:
 	movzbl	(%r8), %edi
 	cmpb	$0, %dil
@@ -26,15 +29,9 @@ Text:
 	movq	%rax, %rdi
 	call	GetOffset
 	movq	%rax, %rbx
-
 	leaq	__morse(%rip), %rax
-	movq	(%rax, %rbx, 8), %rsi
-	movq	$1, %rax
-	movq	$1, %rdi
-	movq	$4, %rdx
-	syscall
-
-
+	movq	(%rax, %rbx, 8), %rdi
+	call	SaveInBuff
 	jmp	.resume
 .invalid:
 
@@ -42,4 +39,5 @@ Text:
 	incq	%r8
 	jmp	.iter
 .return:
+	call	SpitBuff
 	ret
