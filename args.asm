@@ -34,7 +34,7 @@
 	incq	%rcx
 	cmpq	8(%rsp), %rcx
 	je	_fatal_2
-	movq	8(%rsp, %rcx, 8), %r8
+	movq	16(%rsp, %rcx, 8), %r8
 .endm
 
 .globl ParseArgs
@@ -49,7 +49,7 @@ ParseArgs:
 	cmpq	8(%rsp), %rcx
 	jge	.return
 	# getting current argument
-	movq	8(%rsp, %rcx, 8), %rax
+	movq	16(%rsp, %rcx, 8), %rax
 	movzbl	(%rax), %eax
 	cmpb	$'t', %al
 	je	.t_op
