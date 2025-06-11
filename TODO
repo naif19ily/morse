@@ -1,5 +1,11 @@
 
-    * basic structure plus usage                    [accomplished]
-    * implement T mode                              [accomplished]
-    * implement M mode                              [accomplished]
+    Morse To Do List
+
+    Handle arguments
+    Text to morse
+    Morse to text
+    Unknown characters handling
+    Interactive mode
+    Encode file
+    Decode file
 
