@@ -1,5 +1,5 @@
-#  _____ ___ ___ ___ ___ 
-# |     | . |  _|_ -| -_|
+#	_____ ___ ___ ___ ___ 
+# |		 | . |	_|_ -| -_|
 # |_|_|_|___|_| |___|___|
 #
 # Jun 11 2025
@@ -57,41 +57,49 @@ GetOffset:
 
 # Whenever this function is called, the following conditions
 # must be satisfaced:
-#  - rdi contains what is going to be stored into buffer
-#  - r9 is the number of bytes written so far
+# -  rdi contains what is going to be stored into buffer
+# - r9 is the number of bytes written so far
 .globl SaveInBuff
 SaveInBuff:
-        xorq    %rax, %rax
-        leaq    __buffer(%rip), %r10
-        addq    %r9, %r10
+	xorq    %rax, %rax
+	leaq	__buffer(%rip), %r10
+	addq	%r9, %r10
 .f3_iter:
-        cmpq    $4096, %r9
-        je      .f3_flush
-        movzbl  (%rdi), %eax
-        cmpb    $0, %al
-        jz      .f3_ret
-        movb    %al, (%r10)
-        incq    %rdi
-        incq    %r9
-        incq    %r10
-        jmp     .f3_iter
+	cmpq	$4096, %r9
+	je	.f3_flush
+	movzbl	(%rdi), %eax
+	cmpb	$0, %al
+	je	.f3_ret
+	movb    %al, (%r10)
+	incq	%rdi
+	incq	%r9
+	incq	%r10
+	jmp	.f3_iter
 .f3_flush:
-        leaq    __buffer(%rip), %rsi
-        movq    %r9, %rdx
-        movq    $1, %rax
-        movq    $1, %rdi
-        syscall
-        movq    $0, %r9
-        ret
+	leaq	__buffer(%rip), %rsi
+	movq	%r9, %rdx
+	movq	$1, %rax
+	movq	$1, %rdi
+	syscall
+	movq	$0, %r9
+	ret
 .f3_ret:
-        ret
+	ret
 
 .globl SpitBuff
 SpitBuff:
-        leaq    __buffer(%rip), %rsi
-        movq    %r9, %rdx
-        movq    $1, %rax
-        movq    $1, %rdi
-        syscall
-        movq    $0, %r9
-        ret
+	leaq	__buffer(%rip), %rsi
+	# by decrementing r9 by one we remove the trailling space
+	decq	%r9
+	movq	%r9, %rdx
+	movq	$1, %rax
+	movq	$1, %rdi
+	syscall
+	movq	$0, %r9
+	leaq	__abc(%rip), %rsi
+	addq	$26, %rsi
+	movq	$1, %rdx
+	movq	$1, %rax
+	movq	$1, %rdi
+	syscall
+	ret

@@ -34,7 +34,14 @@ Text:
 	call	SaveInBuff
 	jmp	.resume
 .invalid:
-
+	cmpb	$' ', %dil
+	jne	.unknown
+	leaq	__t2mspace(%rip), %rdi
+	call	SaveInBuff
+	jmp	.resume
+.unknown:
+	leaq	__unknown(%rip), %rdi
+	call	SaveInBuff
 .resume:
 	incq	%r8
 	jmp	.iter

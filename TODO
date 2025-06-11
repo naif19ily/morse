@@ -2,7 +2,7 @@
     Morse To Do List
 
     Handle arguments                        ok
-    Text to morse
+    Text to morse                           ok
     Morse to text
     Unknown characters handling
     Interactive mode
