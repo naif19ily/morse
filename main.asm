@@ -10,6 +10,11 @@
 .globl _start
 
 _start:
+        call    InitTrie
+	movq	$60, %rax
+	movq	$0, %rdi
+	syscall
+
         call    ParseArgs
 	cmpb	$1, (__arg_i)
 	je	.go_i

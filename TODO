@@ -4,8 +4,7 @@
     Handle arguments                        ok
     Text to morse                           ok
     Morse to text
-    Unknown characters handling
-    Interactive mode
     Encode file
     Decode file
+    Interactive mode
 
