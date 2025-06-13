@@ -31,6 +31,7 @@ Text:
 	movq	%rax, %rbx
 	leaq	__morse(%rip), %rax
 	movq	(%rax, %rbx, 8), %rdi
+        movq    $-1, %rcx
 	call	SaveInBuff
 	jmp	.resume
 .invalid:
@@ -41,10 +42,12 @@ Text:
 	jmp	.resume
 .unknown:
 	leaq	__unknown(%rip), %rdi
+        movq    $-1, %rcx
 	call	SaveInBuff
 .resume:
 	incq	%r8
 	jmp	.iter
 .return:
+        movq    $'t', %rdi
 	call	SpitBuff
 	ret

@@ -91,9 +91,13 @@ TrieFind:
 	addq	%r9, %r8
 	movzbl	(%r8), %eax
 	cltq
-	cmpq	$0, %rax
-	je	.f1_unk
-	ret
-.f1_unk:
-	movq	$-1, %rax
+        cmpq    $0, %rax
+        je      .f1_check
         ret
+.f1_check:
+        cmpq    $4, %r9
+        jne      .unk
+	ret
+.unk:
+        movq    $-1, %rax
+	ret

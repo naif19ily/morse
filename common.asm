@@ -5,6 +5,9 @@
 # Jun 11 2025
 #
 
+.section .bss
+	.bufw: .zero 8
+
 .section .text
 
 .include "macros.inc"
@@ -60,43 +63,51 @@ GetOffset:
 # Whenever this function is called, the following conditions
 # must be satisfaced:
 # - rdi contains what is going to be stored into buffer
-# - r9 is the number of bytes written so far
+# - rcx is the numbe of bytes to write (-1 if not known)
 .globl SaveInBuff
 SaveInBuff:
+	xorq	%rbx, %rbx
 	xorq    %rax, %rax
 	leaq	__buffer(%rip), %r10
-	addq	%r9, %r10
+	addq	.bufw(%rip), %r10
 .f3_iter:
 	cmpq	$4096, %r9
 	je	.f3_flush
+	cmpq	%rcx, %rbx
+	je	.f3_ret
 	movzbl	(%rdi), %eax
 	cmpb	$0, %al
 	je	.f3_ret
 	movb    %al, (%r10)
 	incq	%rdi
-	incq	%r9
+	incq	(.bufw)
 	incq	%r10
+	incq	%rbx
 	jmp	.f3_iter
 .f3_flush:
 	leaq	__buffer(%rip), %rsi
-	movq	%r9, %rdx
+	movq	(.bufw), %rdx
 	movq	$1, %rax
 	movq	$1, %rdi
 	syscall
-	movq	$0, %r9
+	movq	$0, (.bufw)
 	ret
 .f3_ret:
 	ret
 
 .globl SpitBuff
 SpitBuff:
-	leaq	__buffer(%rip), %rsi
 	# by decrementing r9 by one we remove the trailling space
-	decq	%r9
-	movq	%r9, %rdx
+	# only for text mode (specified in rdi)
+	cmpq	$'t', %rdi
+	jne	.f4_cont
+	decq	(.bufw)
+.f4_cont:
+	leaq	__buffer(%rip), %rsi
+	movq	(.bufw), %rdx
 	movq	$1, %rax
 	movq	$1, %rdi
 	syscall
-	movq	$0, %r9
+	movq	$0, (.bufw)
         CH      $36
 	ret
