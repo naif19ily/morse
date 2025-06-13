@@ -25,7 +25,7 @@ TrieInit:
 	xorq	%r11, %r11
 	xorq	%r12, %r12
 .f0_iter:
-	cmpq	$26, %r9
+	cmpq	$36, %r9
 	je	.f0_ret
 	movq	(%r8), %r11
 .f0_trie:
@@ -57,6 +57,11 @@ TrieInit:
 	incb	%r10b
 	addq	$8, %r8
 	incq	%r9
+	cmpb	$'{', %r10b
+	je	.f0_nums
+	jmp	.f0_iter
+.f0_nums:
+	movb	$'0', %r10b
 	jmp	.f0_iter
 .f0_ret:
 	ret

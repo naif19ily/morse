@@ -37,7 +37,6 @@
 	.mp: .string ".--. "
 	.mq: .string "--.- "
 	.mr: .string ".-. "
-
 	.ms: .string "... "
 	.mt: .string "- "
 	.mu: .string "..- "
@@ -46,6 +45,7 @@
 	.mx: .string "-..- "
 	.my: .string "-.-- "
 	.mz: .string "--.. "
+
 	.m0: .string "----- "
 	.m1: .string ".---- "
 	.m2: .string "..--- "

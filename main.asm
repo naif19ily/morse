@@ -7,8 +7,7 @@
 
 # TODO: REMOVE THIS
 .section .rodata
-	.look: .string ".-."
-
+	.look: .string "----."
 
 .section .text
 
