@@ -5,14 +5,23 @@
 # Jun 11 2025
 #
 
+# TODO: REMOVE THIS
+.section .rodata
+	.look: .string ".- "
+
+
 .section .text
 
 .globl _start
 
 _start:
-        call    InitTrie
+        call    TrieInit
+
+	leaq	.look(%rip), %rdi
+	call	TrieFind
+
+	movq	%rax, %rdi
 	movq	$60, %rax
-	movq	$0, %rdi
 	syscall
 
         call    ParseArgs
