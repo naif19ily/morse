@@ -5,6 +5,9 @@
 # Jun 12 2025
 #
 
+.section .data
+	.a: .string "%d\n"
+
 .section .bss
 	.trie: .zero 512
 
@@ -21,7 +24,6 @@ TrieInit:
 	leaq	__morse(%rip), %r8
 	xorq	%r9, %r9
 	xorq	%r10, %r10
-	movb	$'a', %r10b
 	xorq	%r11, %r11
 	xorq	%r12, %r12
 .f0_iter:
@@ -57,11 +59,6 @@ TrieInit:
 	incb	%r10b
 	addq	$8, %r8
 	incq	%r9
-	cmpb	$'{', %r10b
-	je	.f0_nums
-	jmp	.f0_iter
-.f0_nums:
-	movb	$'0', %r10b
 	jmp	.f0_iter
 .f0_ret:
 	ret
@@ -94,6 +91,7 @@ TrieFind:
 	jmp	.f1_iter
 .f1_ret:
 	leaq	.trie(%rip), %r8
-        movl    (%r8, %r9), %eax
+	xorq	%rax, %rax
+        movb    (%r8, %r9), %al
         cltq
         ret

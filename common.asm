@@ -1,11 +1,13 @@
-#	_____ ___ ___ ___ ___ 
-# |		 | . |	_|_ -| -_|
+#  _____ ___ ___ ___ ___ 
+# |     | . |  _|_ -| -_|
 # |_|_|_|___|_| |___|___|
 #
 # Jun 11 2025
 #
 
 .section .text
+
+.include "macros.inc"
 
 .globl IsMorseable
 
@@ -96,10 +98,5 @@ SpitBuff:
 	movq	$1, %rdi
 	syscall
 	movq	$0, %r9
-	leaq	__abc(%rip), %rsi
-	addq	$26, %rsi
-	movq	$1, %rdx
-	movq	$1, %rax
-	movq	$1, %rdi
-	syscall
+        CH      $36
 	ret

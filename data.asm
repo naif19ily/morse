@@ -16,7 +16,7 @@
 	__unknown: .string "<?> "
 	.globl __unknown
 
-	__abc: .string "abcdefghijklmnopqrstuvwxyz\n /"
+	__abc: .string "abcdefghijklmnopqrstuvwxyz0123456789\n /"
 	.globl __abc
 
 	.ma: .string ".- "
@@ -45,7 +45,6 @@
 	.mx: .string "-..- "
 	.my: .string "-.-- "
 	.mz: .string "--.. "
-
 	.m0: .string "----- "
 	.m1: .string ".---- "
 	.m2: .string "..--- "
