@@ -6,7 +6,7 @@
 #
 
 .section .bss
-	.trie: .zero 64
+	.trie: .zero 512
 
 .section .text
 
@@ -64,8 +64,31 @@ TrieInit:
 .globl TrieFind
 
 TrieFind:
-        leaq    .trie(%rip), %r8
+	movq	%rdi, %r8
         xorq    %rax, %rax
-        movl    27(%r8), %eax
+        xorq    %rdi, %rdi
+	xorq	%r9, %r9
+.f1_iter:
+	movzbl	(%r8), %edi
+	cmpb	$'.', %dil
+	je	.f1_left
+	cmpb	$'-', %dil
+	je	.f1_right
+	jmp	.f1_ret
+.f1_left:
+	movq	$1, %rcx
+	jmp	.f1_upd_i
+.f1_right:
+	movq	$2, %rcx
+	jmp	.f1_upd_i
+.f1_upd_i:
+	shlq	$1, %r9
+	addq	%rcx, %r9
+.f1_resume:
+	incq	%r8
+	jmp	.f1_iter
+.f1_ret:
+	leaq	.trie(%rip), %r8
+        movl    (%r8, %r9), %eax
         cltq
         ret
