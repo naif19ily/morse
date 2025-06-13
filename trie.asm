@@ -6,7 +6,7 @@
 #
 
 .section .data
-	.a: .string "%d\n"
+	.a: .string "%d : %d\n"
 
 .section .bss
 	.trie: .zero 512
@@ -91,7 +91,7 @@ TrieFind:
 	jmp	.f1_iter
 .f1_ret:
 	leaq	.trie(%rip), %r8
-	xorq	%rax, %rax
-        movb    (%r8, %r9), %al
-        cltq
+	addq	%r9, %r8
+	movzbl	(%r8), %eax
+	cltq
         ret

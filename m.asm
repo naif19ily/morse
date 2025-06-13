@@ -18,6 +18,7 @@
 .globl Morse
 
 Morse:
+        call    TrieInit
 	# r15:  message to be translated
 	# r14:  current code
 	# r10: number of bytes used in r14
