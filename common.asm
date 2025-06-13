@@ -59,7 +59,7 @@ GetOffset:
 
 # Whenever this function is called, the following conditions
 # must be satisfaced:
-# -  rdi contains what is going to be stored into buffer
+# - rdi contains what is going to be stored into buffer
 # - r9 is the number of bytes written so far
 .globl SaveInBuff
 SaveInBuff:

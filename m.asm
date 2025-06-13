@@ -50,8 +50,15 @@ Morse:
 	movq	$0, (.code)
 	leaq	.code(%rip), %r14
 	xorq	%r10, %r10
-	jmp	.resume
-.unknown:
+        xorq    %rdi, %rdi
+.cut_spaces: 
+        incq    %r15
+        movzbl  (%r15), %edi
+        cmpb    $' ', %dil
+        je      .cut_spaces
+        jmp     .iter
+.unknown: 
+        
 
 .resume:
 	incq	%r15

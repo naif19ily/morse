@@ -5,9 +5,6 @@
 # Jun 12 2025
 #
 
-.section .data
-	.a: .string "%d : %d\n"
-
 .section .bss
 	.trie: .zero 512
 
@@ -94,4 +91,9 @@ TrieFind:
 	addq	%r9, %r8
 	movzbl	(%r8), %eax
 	cltq
+	cmpq	$0, %rax
+	je	.f1_unk
+	ret
+.f1_unk:
+	movq	$-1, %rax
         ret
