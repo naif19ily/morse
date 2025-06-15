@@ -3,8 +3,5 @@
 
     Handle arguments                        ok
     Text to morse                           ok
-    Morse to text
-    Encode file
-    Decode file
-    Interactive mode
+    Morse to text                           ok
 

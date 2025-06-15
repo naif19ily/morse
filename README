@@ -1,0 +1,14 @@
+
+     _____ ___ ___ ___ ___ 
+    |     | . |  _|_ -| -_|
+    |_|_|_|___|_| |___|___| 
+
+
+    Fastest morse encoder and decoder for real, this is a little practice on x86_64
+    assembly programming language, it has two modes
+
+    m: from morse to text
+    t: from text to morse
+
+    That's it
+
